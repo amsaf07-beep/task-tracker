@@ -1,0 +1,12 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+
+# Node (not required, but safe for future upgrades)
+node_modules/
+dist/
+build/

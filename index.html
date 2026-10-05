@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Personal daily task tracker with calendar, completion heatmap, streaks, weekly completion, and analytics." />
+  <meta name="theme-color" content="#111827" />
+  <title>My Task Tracker</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E✓%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">✓</div>
+        <div>
+          <div class="brand-title">Task Tracker</div>
+          <div class="brand-subtitle">Daily consistency</div>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <button class="nav-item active" data-view="dashboard"><span>▦</span> Dashboard</button>
+        <button class="nav-item" data-view="calendar"><span>▣</span> Calendar</button>
+        <button class="nav-item" data-view="analytics"><span>◔</span> Analytics</button>
+        <button class="nav-item" data-view="settings"><span>⚙</span> Settings</button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="legend-mini">
+          <div><span class="dot done"></span> 100% complete</div>
+          <div><span class="dot partial"></span> Partial</div>
+          <div><span class="dot none"></span> Not started</div>
+        </div>
+        <button id="exportBtn" class="secondary-btn full">Export data</button>
+        <label class="secondary-btn full file-btn">
+          Import data
+          <input id="importInput" type="file" accept="application/json,.json" hidden />
+        </label>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <div class="eyebrow" id="pageEyebrow">Dashboard</div>
+          <h1 id="pageTitle">Good morning</h1>
+        </div>
+        <div class="topbar-actions">
+          <button id="todayBtn" class="secondary-btn">Today</button>
+          <button id="quickAddBtn" class="primary-btn">＋ Add Task</button>
+        </div>
+      </header>
+
+      <section id="dashboardView" class="view active"></section>
+      <section id="calendarView" class="view"></section>
+      <section id="analyticsView" class="view"></section>
+      <section id="settingsView" class="view"></section>
+    </main>
+  </div>
+
+  <div id="modalBackdrop" class="modal-backdrop hidden">
+    <div id="taskModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="taskModalTitle">
+      <div class="modal-header">
+        <div>
+          <div class="eyebrow">Task</div>
+          <h2 id="taskModalTitle">Add task</h2>
+        </div>
+        <button id="closeModalBtn" class="icon-btn" aria-label="Close">×</button>
+      </div>
+
+      <form id="taskForm" class="form-grid">
+        <input type="hidden" id="taskId" />
+
+        <label class="field full-width">
+          <span>Task name *</span>
+          <input id="taskName" required maxlength="160" placeholder="e.g. Complete requirements document" />
+        </label>
+
+        <label class="field">
+          <span>Date *</span>
+          <input id="taskDate" type="date" required />
+        </label>
+
+        <label class="field">
+          <span>Category</span>
+          <select id="taskCategory">
+            <option>Work</option>
+            <option>Personal</option>
+            <option>Health</option>
+            <option>Learning</option>
+            <option>Finance</option>
+            <option>Family</option>
+            <option>Other</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Priority</span>
+          <select id="taskPriority">
+            <option value="high">High</option>
+            <option value="medium" selected>Medium</option>
+            <option value="low">Low</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Start time</span>
+          <input id="taskStart" type="time" />
+        </label>
+
+        <label class="field">
+          <span>End time</span>
+          <input id="taskEnd" type="time" />
+        </label>
+
+        <label class="field full-width">
+          <span>Notes</span>
+          <textarea id="taskNotes" rows="3" maxlength="500" placeholder="Optional notes"></textarea>
+        </label>
+
+        <label class="checkbox-row full-width">
+          <input id="taskRecurring" type="checkbox" />
+          <span>Repeat this task every day for the next 30 days</span>
+        </label>
+
+        <div class="modal-actions full-width">
+          <button type="button" id="deleteTaskBtn" class="danger-btn hidden">Delete</button>
+          <div class="modal-actions-right">
+            <button type="button" id="cancelModalBtn" class="secondary-btn">Cancel</button>
+            <button type="submit" class="primary-btn">Save task</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
